@@ -8,7 +8,7 @@ First, I performed a Nmap scan on the target to find out what services are runni
 ```
 nmap -sV -sC 10.129.8.81
 ```
-![Nmap Results](img/easy_nmap.png)
+![Nmap Results](img/easy_nmap.png) <br>
 From the results, we can see that the target is running:
 - FTP on port 21
 - SSH on port 22
@@ -26,7 +26,7 @@ ftp -P 2121 ceil@10.129.8.81
 ```
 We successfully logged in and found something interesting.
 
-![FTP suspicious](img/ftp_sus.png)
+![FTP suspicious](img/ftp_sus.png) <br>
 From the lab description, it seems that the flag could be found in the SSH service running on port 22.
 
 This FTP service appears to be meant for Ceil, and we see a `.ssh` directory, which is common to store SSH keys for users. <br>
