@@ -4,7 +4,7 @@ For proof and protection of customer data, a user named `HTB` has been created. 
 
 ## Approach
 First, we perform a Nmap scan on the target to find out services running on it.
-```
+```bash
 nmap -sV -sC 10.129.202.41
 ```
 ![Nmap Results p1](img/medium_nmap_1.png) <br>
@@ -15,18 +15,18 @@ From the results, we can find that the server is running:
 - RDP on port 3389
 
 Looking at the NFS service, we find that there is a `/TechSupport` share available to everyone.
-```
+```bash
 showmount -e 10.129.202.41
 ```
 
 We will proceed to mount the NFS share on our machine.
-```
+```bash
 $ mkdir NFS-share
 $ sudo mount -t nfs 10.129.202.41:/ ./NFS-share -o nolock
 ```
 Looking at `NFS-share`, it seems that we cannot access the `/TechSupport` directory unless we are `nobody`.<br>
 We can first try to access the directory by being `root`.
-```
+```bash
 sudo su
 ```
 We managed to access the `/TechSupport` directory as root user. <br>
@@ -37,7 +37,7 @@ The content of the ticket is as follows:
 We can see that the credential `alex:lol123!mD` is passed inside this ticket.
 
 Let's try RDP with the new credentials that we found.
-```
+```bash
 xfreerdp3 /v:10.129.202.41 /u:alex /p:'lol123!mD'
 ```
 We successfully RDP-ed to the target on alex's account. <br>
@@ -47,7 +47,7 @@ It seems to contain a credential `sa:87N1ns@slls83`.
 Looking at the users in `C:\Users`, it seems that there is one other user, `Administrator`.
 
 I attempted to RDP to 'sa' with the new set of credentials, but it seemed to fail. So, I tried to access the `Administrator` account with the password from `important.txt`.
-```
+```bash
 xfreerdp3 /v:10.129.202.41 /u:Administrator /p:'87N1ns@slls83'
 ```
 We successfully logged into the Administrator account.
