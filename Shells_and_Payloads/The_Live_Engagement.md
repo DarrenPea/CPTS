@@ -31,8 +31,8 @@ Visiting `https://172.16.1.11:8080` on Firefox, we can see that the website runs
 
 We see that there is a "Manager App" portion, but we require credentials to access it. Using the credentials from `access-creds.txt`, we successfully logged in to Tomcat Web Application Manager.
 
-Looking around the page, I noticed that we can deploy a WAR file.
-![WAR section](img/war_section.png)
+Looking around the page, I noticed that we can deploy a WAR file. <br>
+![WAR section](img/war_section.png) <br>
 I will create a WAR java/jsp compatible web reverse shell payload.
 The internal IP of the foothold machine is `172.16.1.5` through `ifconfig`.
 ```bash
@@ -45,8 +45,8 @@ sudo nc -nlvp 443
 Then, we upload and deploy `rev_shell.war`. <br>
 To activate the WAR file, we can access `http://172.16.1.11/rev_shell`.
 
-We then obtained a reverse shell on Host 1.
-![Reverse shell](img/host1_revshell.png)
+We then obtained a reverse shell on Host 1. <br>
+![Reverse shell](img/host1_revshell.png)<br>
 We can then change directory to `C:\Shares` and find out that the directory located in `C:\Shares` is `dev-share`.
 
 ### Host 2
@@ -78,7 +78,8 @@ msf6 > use 50064.rb
 ```
 We will configure the options of the module to fit our needs.
 ![exploit options](img/host2_msfconsole.png)<br>
-We managed to obtain a meterpreter shell, and subsequently obtained the contents of `/customscripts/flag.txt`. <br>
+We managed to obtain a meterpreter shell, and subsequently obtained the contents of `/customscripts/flag.txt`.
+
 ![Flag](img/host2_flag.png)
 
 ### Host 3
@@ -109,4 +110,5 @@ msf6 > use exploit/windows/smb/ms17_010_psexec
 We will configure the necessary options again and execute the exploit.
 ![MSF exploit](img/host3_msfoptions.png)<br>
 We successfully obtained a shell on Host 3 and we can print the necessary contents.
+
 ![Host 3 flag](img/host3_answer.png)
